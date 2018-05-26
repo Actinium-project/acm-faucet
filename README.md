@@ -1,4 +1,4 @@
-SHT Faucet
+Actinium Faucet
 =================
 
 What is it?
