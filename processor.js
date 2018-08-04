@@ -167,14 +167,27 @@ function _getProcessorData(callback){
 */
 function _getWalletData(callback){
 	console.log('Updating wallet data');
-	client.getInfo(function(err,response){
+
+        client.getBlockCount(function(err, response){
+           if(err) {
+              console.log("Could not get block count");
+           } else {
+             console.log("got block count: " + response);
+             data.wallet.block_count = response;
+           }
+        client.getDifficulty(function(err, response) {
+             data.wallet.difficulty = response;
+
+        client.getConnectionCount(function(err, response) {
+                data.wallet.connections = response;
+	client.getWalletInfo(function(err,response){
 		if (err) {
 			console.log('Could not get wallet data!',err);
 		} else {
 			data.wallet.balance = response.balance+' '+config.symbol;
-			data.wallet.block_count = response.blocks;
-			data.wallet.difficulty = response.difficulty;
-			data.wallet.connections = response.connections;
+			// data.wallet.block_count = response.blocks;
+			// data.wallet.difficulty = response.difficulty;
+			// data.wallet.connections = response.connections;
 
 			//post our wallet data to walletexplorer.net (helps community keep wallet software up to date)
 			if (iz.required(config.wallet_explorer_auth)) {
@@ -198,6 +211,13 @@ function _getWalletData(callback){
 			}
 		}
 		if (callback) callback(err,response);
+
+
+
+              });
+            });
+          });
+
 	});
 }
 
