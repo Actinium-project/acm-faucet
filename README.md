@@ -31,7 +31,7 @@ Or with *systemd* (Linux only):
 
 ```
 [Unit]
-Description=ShitcoinDeLuxe Faucet Daemon
+Description=Actinium Faucet Daemon
 After=network.target
 
 [Service]

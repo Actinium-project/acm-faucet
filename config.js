@@ -56,25 +56,25 @@
 module.exports = {
 	'theme': "darkly"
 	,'stylesheet': ""
-	,'title': "ShitcoinDeLuxe (SHT) Faucet - Get free SHT!"
-	,'brand': "ShitcoinDeLuxe Faucet"
-	,'copyright': '<a href="http://www.google.com">SHT Foundation</a>'
-	,'coin': "ShitcoinDeLuxe"
-	,'symbol': "SHT"
+	,'title': "Actinium Faucet"
+	,'brand': "ACM Faucet"
+	,'copyright': '<a href="https://actinium.org">Actinium</a>'
+	,'coin': "Actinium"
+	,'symbol': "ACM"
 	,'pages':{
 		'home':{
-			'h1':"ShitcoinDeLuxe(SHT) Faucet"
-			, 'faucet_text':'This faucet automatically pays out ShitcoinDeLuxe on a schedule. Enter your ShitcoinDeLuxe address below to receive free SHT. <br/><br/><a href="https://github.com/ShitcoinDeLuxe-project/ShitcoinDeLuxe/releases/latest">Need a SHT Wallet?</a><br/><br/>'
+			'h1':"Actinium Faucet"
+			, 'faucet_text':'This faucet automatically pays out Actiniums on a schedule. Enter your Actinium address below to receive free ACM. <br/><br/><a href="https://github.com/Actinium-project/Actinium/releases/latest">Need a Wallet?</a><br/><br/>'
 			,'payout_header':'Payout Chances'
 		}
 	}
-	,'session_secret':"PUTSOMEALPHANUMERICSHERE"
+	,'session_secret':"put_some_alphanumerics_here"
 	,'show_next_payout': false
 	,'show_wallet_balance': false
 	,'rpc':{
 		'host':"localhost"
 		,'port':2300
-		,'user':"someusername"
+		,'user':"someusernamehere"
 		,'pass':"someharspasswordhere"
 		,'timeout':30000
 		,'ssl':false
@@ -83,17 +83,17 @@ module.exports = {
 	}
 	,'faucet':{
 		'immediate':false
-		,'interval':5 //720 = 12 hours
-		,'user_limit':50
+		,'interval':720 //720 = 12 hours
+		,'user_limit':25
 		,'payout':[
-			[1,50] // 50%
-			,[2,20] // 20%
-			,[3,15] // 15%
-			,[4,10] // 10%
-			,[5,5] // 5%
+			[1,10] // 10%
+			,[2,6] // 6%
+			,[3,3] // 3%
+			,[4,2] // 2%
+			,[5,1] // 1%
 		]
 	},
-	
+
 	'webServer': {
 		'port': 3002
 	},
