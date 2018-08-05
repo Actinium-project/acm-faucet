@@ -58,6 +58,7 @@ function getData() {
 */
 function isQueued(ip,address) {
 	var found=false;
+        console.log(data);
 	for(var u=0;u<data.queue.length;u++) {
 		var user=data.queue[u];
 		if (user.ip == ip || user.address == address) {

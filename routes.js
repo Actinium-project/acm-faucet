@@ -151,18 +151,24 @@ exports.submit = function(req, res){
 	var address_regex = /^[a-zA-Z0-9]{20,40}$/ //This regex is very basic. We just see if input is alphanumeric between 20 and 40 chars before passing through to RPC for further inspection
 		,address_ok = (iz.required(req.body.address) && iz.string(req.body.address) && address_regex.test(req.body.address))
 		,captcha_ok = (iz.required(req.cookies.captcha) && iz.required(req.body[req.cookies.captcha]) && iz.string(req.body[req.cookies.captcha]) && req.body[req.cookies.captcha] === "1");
-
-	if (processor.isQueued(req.ip,req.body.address)) {
-
+        
+        // IMPORTANT: if you're running behind a web-server (nginx etc.) you must forward the original IP address.
+        // Otherwise just use "req.ip" property from request
+        // Check this article on forwarding IPs from nginx: https://calvin.me/forward-ip-addresses-when-using-nginx-proxy/
+        var realIP = req.headers['x-real-ip'];
+        var userAddress = req.body.address;
+	
+        if (processor.isQueued(realIP,userAddress)) {
+                
 		//This IP or coin address is already entered in the current faucet cycle
-		console.log('User already entered!',req.ip,req.body.address);
+		console.log('User already entered!',realIP,userAddress);
 		_failure(req,res,'You are already entered');
 
 	} else if (address_ok && captcha_ok) {
 
 		//Seems like we may have an address and the captcha is OK. Let's check the user's history
 
-		db.users.find({$or: [{key:req.ip},{key:req.body.address}] },function(err,users){
+		db.users.find({$or: [{key:realIP},{key:userAddress}] },function(err,users){
 			if (err) {
 				//Error!
 				console.log('Database error',err);
@@ -170,13 +176,13 @@ exports.submit = function(req, res){
 				return;
 			} else if (users && _limitExceeded(users)) {
 				//User exists by IP or coin address and one or the other has exceeded the max # of entries
-				console.log('User exceeded limit',req.ip,req.body.address);
+				console.log('User exceeded limit',realIP,userAddress);
 				_failure(req,res,'You have exceeded your limit');
 				return;
 			}
 			// Now see if the address is valid
-			client.validateAddress(req.body.address,function(err,response){
-					console.log('validateAddress',req.body.address,response);
+			client.validateAddress(userAddress,function(err,response){
+					console.log('validateAddress',userAddress,response);
 					if (err) {
 						//Error
 						console.log(err);
@@ -186,7 +192,7 @@ exports.submit = function(req, res){
 						_failure(req,res,'Please enter a valid address');
 					} else {
 						//Address is valid. Queue this entry.
-						processor.queue(req.ip,req.body.address,function(err,result){
+						processor.queue(realIP,userAddress,function(err,result){
 							if (err) {
 								//Error
 								console.log('Database error',err);
