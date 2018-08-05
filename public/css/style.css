@@ -41,3 +41,6 @@ h1 {
 .address-report label {
 	padding-right:6px;
 }
+.coin-address {
+   color: green;
+}

@@ -1,8 +1,14 @@
 - var curyear = function() {
-- 	return new Date().getFullYear();
+-    return new Date().getFullYear();
 - }
 
 p &nbsp;
-	
+
 footer
-	p!= '&copy;'+curyear()+' '+copyright+' &middot; powered by <a href="https://github.com/clapyohands/cryptofaucet-node">cryptofaucet-node</a>'
+
+     p!= '&copy;'+curyear()+' '+copyright+' &middot; powered by <a href="https://github.com/clapyohands/cryptofaucet-node">cryptofaucet-node</a>'
+     p
+       | Support our Faucet!
+       p Send ACM to  
+         div.coin-address NLq4Pv9WX1MxqXiAnA4KoagxpKRZtECVFS
+       p Thanks! 
